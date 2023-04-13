@@ -33,6 +33,9 @@ String baseUrl = "http://3.90.70.155:8000";
 
         //how to do API testing then ?
         //Verify status code is 200
+        Assertions.assertEquals(response.statusCode(),200);
+
+        //Verify content type is application/json
         Assertions.assertEquals(response.contentType(), "application/json");
 
 
