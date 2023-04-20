@@ -64,9 +64,44 @@ String baseUrl = "http://3.90.70.155:8000";
 
     }
 
+    /*
+
+    Given no headers provided
+    When users send GET request to/api/hello
+    Then response status code should be 200
+    And Content type header should be "text/plain;charset=UTF-8"
+    And header should contain date
+    And Content-Length should be 17
+    And body should be "Hello from Sparta"
+     */
+
+
+    @DisplayName("GET request to /api/hello")
+    @Test
+    public void test3(){
+        //send request and save response inside the response object
+        Response response = RestAssured.when().get(baseUrl + "/api/hello");
+
+        //verify status code 200
+        Assertions.assertEquals(200,response.statusCode());
+
+        //verify Content type
+        Assertions.assertEquals("text/plain;charset=UTF-8",response.contentType());
+
+        //verify we have headers named date
+        Assertions.assertTrue(response.headers().hasHeaderWithName("Date"));
+
+        //How to Get and Header from response using header key?
+        System.out.println("response.header(\"Content-Length\") = " + response.header("Content-Length"));
+        System.out.println(response.header("Date"));
+
+        //Verify content length is 17
+        Assertions.assertEquals("17",response.header("Content-Length"));
+        //Verify body is "Hello from Sparta"
+        Assertions.assertEquals("Hello from Sparta",response.body().asString());
 
 
 
-
+    }
 
 }
