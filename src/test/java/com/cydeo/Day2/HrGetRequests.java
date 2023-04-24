@@ -1,11 +1,15 @@
 package com.cydeo.Day2;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HrGetRequests {
 
@@ -41,18 +45,22 @@ public class HrGetRequests {
     @Test
     public void test2(){
 
-        Response response = RestAssured.get("/regions/2");
+        Response response = given().accept(ContentType.JSON)
+
+                .when()
+
+                         .get("/regions/2");
 
         //Verify status code
-        Assertions.assertEquals(200,response.statusCode());
+        assertEquals(200,response.statusCode());
 
         //Verify content type
-        Assertions.assertEquals("application/json",response.contentType());
+        assertEquals("application/json",response.contentType());
 
         response.prettyPrint();
 
         //Verify body contains Americas
-        Assertions.assertEquals(response.body().asString().contains("Americas"),true);
+        assertTrue(response.body().asString().contains("Americas"));
 
 
 
